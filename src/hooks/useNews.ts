@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { apiKey } from "../utils/constant";
+// import { apiKey } from "../utils/constant";
 import { Article } from "../types/Article";
 
 export const useNews = (
@@ -19,9 +19,13 @@ export const useNews = (
         setLoading(true);
         setError(null);
 
+        // const url = searchQuery
+        //   ? `https://newsapi.org/v2/everything?q=${searchQuery}&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}`
+        //   : `https://newsapi.org/v2/top-headlines?country=us&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}`;
+
         const url = searchQuery
-          ? `https://newsapi.org/v2/everything?q=${searchQuery}&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}`
-          : `https://newsapi.org/v2/top-headlines?country=us&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}`;
+          ? `/api/news?q=${searchQuery}&page=${page}&pageSize=${pageSize}`
+          : `/api/news?page=${page}&pageSize=${pageSize}`;
 
         const result = await axios.get(url);
         setArticles(result.data.articles || []);
