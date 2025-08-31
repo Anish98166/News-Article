@@ -19,13 +19,11 @@ export const useNews = (
         setLoading(true);
         setError(null);
 
-        const result = await axios.get("/api/news", {
-          params: {
-            q: searchQuery,
-            page,
-            pageSize,
-          },
-        });
+        const url = searchQuery
+          ? `https://newsapi.org/v2/everything?q=${searchQuery}&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}`
+          : `https://newsapi.org/v2/top-headlines?country=us&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}`;
+
+        const result = await axios.get(url);
         setArticles(result.data.articles || []);
         setTotalResults(result.data.totalResults || 0);
       } catch (err: any) {
